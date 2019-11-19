@@ -1,0 +1,12 @@
+#ifndef COMPUTER_H
+#define COMPUTER_H
+#include <QtCore>
+
+class Computer{
+public:
+    QList<bool> phases;
+    QString actualState;
+    Computer();
+};
+
+#endif // COMPUTER_H
