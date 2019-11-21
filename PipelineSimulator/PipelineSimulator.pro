@@ -23,7 +23,7 @@ nasm.output = ${QMAKE_FILE_BASE}.o
 nasm.commands = nasm $$NASMEXTRAFLAGS -o ${QMAKE_FILE_BASE}.o ${QMAKE_FILE_NAME}
 nasm.input = NASM_SOURCES
 
-NASM_SOURCES += functions.asm
+NASM_SOURCES = functions.asm
 
 SOURCES += \
     graphiccomponents.cpp \

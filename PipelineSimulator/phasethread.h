@@ -6,7 +6,7 @@
 #include "product.h"
 
 extern "C"{
-    int _randomGenerator(int min, int max);
+    int _randomGenerator(int, int);
 }
 
 class PhaseThread : public QThread
