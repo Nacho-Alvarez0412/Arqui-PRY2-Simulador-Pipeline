@@ -6,6 +6,7 @@ class Product
 {
 public:
     QString name;
+    bool productionState;
 
     Product(QString name);
 
