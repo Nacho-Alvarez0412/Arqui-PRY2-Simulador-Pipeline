@@ -4,6 +4,11 @@
 #include <QRandomGenerator>
 #include "graphiccomponents.h"
 #include "product.h"
+
+extern "C"{
+    int _randomGenerator(int min, int max);
+}
+
 class PhaseThread : public QThread
 {
 public:
@@ -36,6 +41,7 @@ public:
     void setPause();
     void stop();
     void initGraphics(QLabel*,QLabel*,QLabel*,QLabel*,QLabel*,QLabel*,QLabel*,QTextEdit*);
+
 
 
 };

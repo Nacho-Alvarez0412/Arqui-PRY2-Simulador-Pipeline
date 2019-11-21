@@ -74,13 +74,17 @@ void PhaseThread :: run(){
             sleep(2);
 
             //
-            if(random.generate()%100 <= this->errorRange){
+            int randomNumber=_randomGenerator(0, 100);
+
+            if(randomNumber <= this->errorRange){
                 //
 
                 graphicComponents->binnacle->append("An error ocurred during production, phase put in hault");
 
                 //
-                int wait = (random.generate()%this->disposeTime)*2;
+                //int wait = (random.generate()%this->disposeTime)*2;
+                int wait=(_randomGenerator(0, this->disposeTime))*2;
+
                 //
                 cantErrors++;
                 int totalErrors = globalErrors->text().toInt()+1;

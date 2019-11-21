@@ -65,7 +65,8 @@ SOURCES       = ../PipelineSimulator/graphiccomponents.cpp \
 		moc_phasecreatordialog.cpp \
 		moc_phaseviewdialog.cpp \
 		moc_pipelineviewdialog.cpp
-OBJECTS       = graphiccomponents.o \
+OBJECTS       = functions.o \
+		graphiccomponents.o \
 		main.o \
 		mainwindow.o \
 		phasecreatordialog.o \
@@ -245,6 +246,7 @@ DIST          = ../../../../Qt/5.13.0/clang_64/mkspecs/features/spec_pre.prf \
 		../../../../Qt/5.13.0/clang_64/mkspecs/features/qt_config.prf \
 		../../../../Qt/5.13.0/clang_64/mkspecs/macx-clang/qmake.conf \
 		../../../../Qt/5.13.0/clang_64/mkspecs/features/spec_post.prf \
+		../PipelineSimulator/.qmake.stash \
 		../../../../Qt/5.13.0/clang_64/mkspecs/features/exclusive_builds.prf \
 		../../../../Qt/5.13.0/clang_64/mkspecs/features/mac/sdk.prf \
 		../../../../Qt/5.13.0/clang_64/mkspecs/features/toolchain.prf \
@@ -478,6 +480,7 @@ Makefile: ../PipelineSimulator/PipelineSimulator.pro ../../../../Qt/5.13.0/clang
 		../../../../Qt/5.13.0/clang_64/mkspecs/features/qt_config.prf \
 		../../../../Qt/5.13.0/clang_64/mkspecs/macx-clang/qmake.conf \
 		../../../../Qt/5.13.0/clang_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		../../../../Qt/5.13.0/clang_64/mkspecs/features/exclusive_builds.prf \
 		../../../../Qt/5.13.0/clang_64/mkspecs/features/mac/sdk.prf \
 		../../../../Qt/5.13.0/clang_64/mkspecs/features/toolchain.prf \
@@ -676,6 +679,7 @@ Makefile: ../PipelineSimulator/PipelineSimulator.pro ../../../../Qt/5.13.0/clang
 ../../../../Qt/5.13.0/clang_64/mkspecs/features/qt_config.prf:
 ../../../../Qt/5.13.0/clang_64/mkspecs/macx-clang/qmake.conf:
 ../../../../Qt/5.13.0/clang_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 ../../../../Qt/5.13.0/clang_64/mkspecs/features/exclusive_builds.prf:
 ../../../../Qt/5.13.0/clang_64/mkspecs/features/mac/sdk.prf:
 ../../../../Qt/5.13.0/clang_64/mkspecs/features/toolchain.prf:
@@ -736,6 +740,7 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
+	$(COPY_FILE) --parents ../PipelineSimulator/functions.asm $(DISTDIR)/
 	$(COPY_FILE) --parents ../../../../Qt/5.13.0/clang_64/mkspecs/features/data/dummy.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../PipelineSimulator/graphiccomponents.h ../PipelineSimulator/mainwindow.h ../PipelineSimulator/phasecreatordialog.h ../PipelineSimulator/phasethread.h ../PipelineSimulator/phaseviewdialog.h ../PipelineSimulator/pipeline.h ../PipelineSimulator/pipelineviewdialog.h ../PipelineSimulator/product.h ../PipelineSimulator/productgenerator.h $(DISTDIR)/
 	$(COPY_FILE) --parents ../PipelineSimulator/graphiccomponents.cpp ../PipelineSimulator/main.cpp ../PipelineSimulator/mainwindow.cpp ../PipelineSimulator/phasecreatordialog.cpp ../PipelineSimulator/phasethread.cpp ../PipelineSimulator/phaseviewdialog.cpp ../PipelineSimulator/pipeline.cpp ../PipelineSimulator/pipelineviewdialog.cpp ../PipelineSimulator/product.cpp ../PipelineSimulator/productgenerator.cpp $(DISTDIR)/
@@ -749,6 +754,7 @@ clean: compiler_clean
 
 distclean: clean 
 	-$(DEL_FILE) -r PipelineSimulator.app
+	-$(DEL_FILE) .qmake.stash
 	-$(DEL_FILE) Makefile
 
 
@@ -764,6 +770,12 @@ mocables: compiler_moc_header_make_all compiler_moc_objc_header_make_all compile
 check: first
 
 benchmark: first
+
+compiler_nasm_make_all: functions.o
+compiler_nasm_clean:
+	-$(DEL_FILE) functions.o
+functions.o: ../PipelineSimulator/functions.asm
+	nasm -f elf64 -g -F dwarf -o functions.o ../PipelineSimulator/functions.asm
 
 compiler_rcc_make_all:
 compiler_rcc_clean:
@@ -1598,7 +1610,7 @@ compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_uic_clean 
+compiler_clean: compiler_nasm_clean compiler_moc_predefs_clean compiler_moc_header_clean compiler_uic_clean 
 
 ####### Compile
 
