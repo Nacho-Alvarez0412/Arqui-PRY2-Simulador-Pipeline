@@ -1,12 +1,13 @@
 #ifndef PHASETHREAD_H
 #define PHASETHREAD_H
 #include <QtCore>
-#include <QRandomGenerator>
 #include "graphiccomponents.h"
 #include "product.h"
 
 extern "C"{
     int _randomGenerator(int, int);
+    int _greaterThan(int,int);
+    int _lessThan(int,int);
 }
 
 class PhaseThread : public QThread

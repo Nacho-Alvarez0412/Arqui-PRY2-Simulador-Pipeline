@@ -75,8 +75,10 @@ void PhaseThread :: run(){
 
             //
             int randomNumber=_randomGenerator(0, 100);
+            int ifNumber=_greaterThan(this->errorRange,randomNumber);
 
-            if(randomNumber <= this->errorRange){
+            //if(randomNumber <= this->errorRange){
+            if(ifNumber){
                 //
 
                 graphicComponents->binnacle->append("An error ocurred during production, phase put in hault");
@@ -91,7 +93,9 @@ void PhaseThread :: run(){
                 globalErrors->setNum(totalErrors);
                 graphicComponents->errors->setNum(cantErrors);
                 //
-                if(wait >= disposeTime){
+                int ifNumber2=_lessThan(disposeTime,wait);
+                //if(wait >= disposeTime){
+                if(ifNumber2){
                     //
                     graphicComponents->binnacle->append("Product was disposed, part took more recovery time than supported.");
                     cantDisposed++;
